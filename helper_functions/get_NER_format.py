@@ -15,7 +15,9 @@ def NER_maker(df, index):
         return pd.DataFrame()
     word = []
     label = []
+    ind = []
     for elem in s.split(): 
+        ind.append(index)
         if elem in d: 
             word.append(elem.replace('#', ' '))
             label.append(d[elem]['entity_type'])
@@ -24,7 +26,12 @@ def NER_maker(df, index):
             label.append('O')
     word.append(np.nan)
     label.append(np.nan)
-    temp = pd.DataFrame({'word': word, 'label': label})
+    ind.append(index)
+    temp = pd.DataFrame({
+                         'word': word, 
+                         'label': label, 
+                         'orig_index': ind
+                        })
     return temp
 
 from concurrent.futures import ThreadPoolExecutor
